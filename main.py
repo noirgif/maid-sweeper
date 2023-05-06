@@ -28,4 +28,4 @@ if __name__ == "__main__":
     )
 
     # classify a directory
-    loop.run_until_complete(context.dispatch(Directory(), Path(r"F:\Game")))
+    loop.run_until_complete(context.dispatch(Directory(), Path(sys.argv[1])))

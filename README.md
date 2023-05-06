@@ -6,9 +6,15 @@ However, if allowed, this maid is also capable of Danshari (not yet). She will [
 
 ## Feature
 
-* Failed to use Go but instead goes for asyncio
-* 
+* Asyncio
+* MongoDB
+* Not scanning every single file inside code and program directories, saving time
+* Scary
 
+## How to use
+
+1. Start a mongoDB instance
+2. Run `python main.py <path>`, then you can find tagged entries in Database 'sweep_maid' Collection 'file_metadata'.
 
 ## TO-DO
 
