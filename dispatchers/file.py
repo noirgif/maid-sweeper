@@ -1,33 +1,32 @@
-from dispatchers import register_dispatcher
+from pathlib import Path
+import re
+from common.context import Context
+from common.patterns import EXTENSIONS, FILENAME_PATTERNS
 from common.types import Dispatcher
+from dispatchers.tag import Tag
 
-extension_tags = {
-    "jpg": "image",
-    "png": "image",
-    "jpeg": "image",
-    "mp4": "video",
-    "mov": "video",
-    "avi": "video",
-    "mp3": "audio",
-    "wav": "audio",
-    "flac": "audio",
-    "docx": "document",
-    "pdf": "document",
-    "txt": "document"
-    
-}
 
-@register_dispatcher("file")
+
 class File(Dispatcher):
-    def __init__(self, path: str):
-        self.path = path
-    
-    def dispatch(self):
+    def dispatch(self, context: Context, path: Path):
         # match types based on extensions
-        extension = self.path.split('.')[-1]
+        extension = path.suffix[1:]
 
-        actions = []
-        if extension in extension_tags:
-            actions.append(('tag', extension_tags[extension]))
+        # extension-based tagging
+        tags : list[str] = []
+        for file_type in EXTENSIONS:
+            if extension in EXTENSIONS[file_type]:
+                tags.append(file_type)
+        
+        # special cases 
+        for file_tags, regex in FILENAME_PATTERNS:
+            if re.match(regex, path.name):
+                if type(file_tags) is str:
+                    tags.append(file_tags)
+                else:
+                    tags += file_tags
+        # TODO: more file name/date based tagging
 
-        return actions 
+
+        if tags:
+            context.dispatch(Tag(self), path, tags)

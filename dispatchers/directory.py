@@ -1,22 +1,24 @@
 from pathlib import Path
-from common.types import Dispatcher, Signal
+import re
+from common.context import Context
+from common.types import Dispatcher
+from common.patterns import TYPICAL_FILES
+from dispatchers.file import File
+from dispatchers.tag import Tag
 
-@Dispatcher.register("directory")
 class Directory(Dispatcher):
-    def __init__(self, directory: Path):
-        self.directory = directory
-        self.handlers = {
-            "stop": self.stop
-        }
+    def dispatch(self, context: Context, directory: Path):
+        for path in directory.iterdir():
+            for type in TYPICAL_FILES:
+                for regex in TYPICAL_FILES[type]:
+                    if re.match(regex, path.name, re.IGNORECASE):
+                        context.dispatch(Tag(self), directory, [type])
+                        # do not continue if the whole directory is tagged
+                        # TODO: further categorize the directory
+                        return
+        for path in directory.iterdir():
+            context.dispatch(File(self), path) # type: ignore
+            if path.is_dir():
+                context.dispatch(Directory(self), path) # type: ignore
 
-    def dispatch(self):
-        for inode in self.directory.iterdir():
-            if inode.is_dir():
-                yield ('directory', self.directory)
-            else:
-                yield ('file', inode)
-    
-    def stop(self, path: Path):
-        # Stop the current directory
-        if path == self.directory:
-            yield Signal("directory.stop")
+        # TODO: group similar files together

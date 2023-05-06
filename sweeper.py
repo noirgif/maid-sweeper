@@ -1,6 +1,5 @@
 from pathlib import Path
 from pymongo import MongoClient
-from classifier import Classifier
 from concurrent.futures import ThreadPoolExecutor
 
 from common.types import Action
