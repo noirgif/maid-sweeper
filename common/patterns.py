@@ -50,7 +50,7 @@ TYPICAL_FILES = {
     r'^tsconfig\.json$',
     r'^\.vscode$',
     r'^.*\.tex$',
-    r'README(\.md|\.rst|\.txt)?$',
+    r'README(\.md)?$',
     r'^LICENSE$',
 ]), 
 "game": set([
@@ -74,7 +74,7 @@ TYPICAL_FILES = {
     r'^BGM$', # some games, like CrackleCradle
     r'^root\.pfs', # Artemis Engine
     r'^.*_Data$', # Unity
-    
+    r'^README\.txt$', # some games
 ]), 
 "software": set([
     r'^.*\.dll$',
@@ -184,12 +184,71 @@ EXTENSIONS = {
         "wks",
         "wps",
         "wpd",
-    ))
+    )),
+    "source_file": set((
+        "py",
+        "c",
+        "cpp",
+        "h",
+        "hpp",
+        "cs",
+        "java",
+        "js",
+        "ts",
+        "tsx",
+        "jsx",
+        "go",
+        "rs",
+        "rb",
+        "php",
+        "sh",
+        "bat",
+        "ps1",
+        "swift",
+        "kt",
+        "ktm",
+        "kts",
+        "clj",
+        "cljs",
+        "cljc",
+        "groovy",
+        "scala",
+        "sc",
+        "lua",
+        "dart",
+        "coffee",
+        "elm",
+        "erl",
+        "ex",
+        "exs",
+        "f",
+        "f90",
+        "f95",
+        "f03",
+        "f08",
+        "fs",
+        "fsi",
+        "fsx",
+        "ml",
+        "mli",
+        "mll",
+        "mly",
+        "nim",
+        "r",
+        "nb"
+    )),
 }
 
 FILENAME_PATTERNS : list[tuple[str | list[str], str] ]= [
+    # ArXiv paper
     ("arxiv", r'^\d{4}\.\d{4,5}\.pdf$'),
+    
+    # Game Software
     (["game", "dmm"], r'^[a-z]{4,5}_\d{4,5}\.exe$'),
+    
+    # Media Software
     (["media", "DLsite"], r'^(RJ|VJ)\d{6,8}\.zip$'),
+    
+    # Book
     (["book", "DLsite"], r'^BJ\d{6,8}\.zip$'),
 ]

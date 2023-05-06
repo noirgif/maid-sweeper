@@ -5,8 +5,6 @@ from typing import Callable, TypeVar
 
 from common.types import AbstractContext, Dispatcher
 
-Self = TypeVar("Self", bound="Context")
-
 class Context(AbstractContext):
     def __init__(self, db, loop: AbstractEventLoop, executor: Executor):
         self.executor = executor
@@ -31,7 +29,7 @@ class Context(AbstractContext):
         loop = asyncio.get_running_loop()
         await loop.run_in_executor(self.executor, callable, self, *args, **kwargs)
     
-    def clone_thread(self: Self, loop: AbstractEventLoop) -> Self:
+    def clone_thread(self: 'Context', loop: asyncio.AbstractEventLoop) -> 'Context':
         """Clone the current thread's context into a new thread."""
         return self.__class__(self.db, loop, self.executor)
 

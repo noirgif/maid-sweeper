@@ -25,8 +25,16 @@ class File(Dispatcher):
                     tags.append(file_tags)
                 else:
                     tags += file_tags
+
         # TODO: more file name/date based tagging
 
 
         if tags:
             await context.dispatch(Tag(self), path, tags)
+        elif path.is_file():
+            # only tag files as misc
+            await context.dispatch(Tag(self), path, ["misc"])
+
+            # if it is misc, and not part of a software
+            # try to read its name and content
+            # if unintelligible, tag it as garbage

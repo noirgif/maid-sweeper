@@ -9,11 +9,11 @@ from common.context import Context
 from dispatchers.directory import Directory
 import nest_asyncio
 
-# logging.basicConfig(level=logging.DEBUG)
-# if not sys.warnoptions:
-#     import os, warnings
-#     warnings.simplefilter("default") # Change the filter in this process
-#     os.environ["PYTHONWARNINGS"] = "default" # Also affect subprocesses]
+logging.basicConfig(level=logging.DEBUG)
+if not sys.warnoptions:
+    import os, warnings
+    warnings.simplefilter("default") # Change the filter in this process
+    os.environ["PYTHONWARNINGS"] = "default" # Also affect subprocesses]
 
 nest_asyncio.apply()
 
