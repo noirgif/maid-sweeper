@@ -190,5 +190,6 @@ EXTENSIONS = {
 FILENAME_PATTERNS : list[tuple[str | list[str], str] ]= [
     ("arxiv", r'^\d{4}\.\d{4,5}\.pdf$'),
     (["game", "dmm"], r'^[a-z]{4,5}_\d{4,5}\.exe$'),
-    (["media", "DLsite"], r'^(RJ|VJ)\d{4,5}\.zip$'),
+    (["media", "DLsite"], r'^(RJ|VJ)\d{6,8}\.zip$'),
+    (["book", "DLsite"], r'^BJ\d{6,8}\.zip$'),
 ]

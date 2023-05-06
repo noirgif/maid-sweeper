@@ -8,7 +8,7 @@ from dispatchers.tag import Tag
 
 
 class File(Dispatcher):
-    def dispatch(self, context: Context, path: Path):
+    async def dispatch(self, context: Context, path: Path):
         # match types based on extensions
         extension = path.suffix[1:]
 
@@ -29,4 +29,4 @@ class File(Dispatcher):
 
 
         if tags:
-            context.dispatch(Tag(self), path, tags)
+            await context.dispatch(Tag(self), path, tags)

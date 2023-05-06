@@ -1,21 +1,39 @@
-from asyncio import AbstractEventLoop, Future
+from asyncio import AbstractEventLoop
+import asyncio
 from concurrent.futures import Executor
-from typing import Any, Callable
-import typing
+from typing import Callable, TypeVar
 
 from common.types import AbstractContext, Dispatcher
 
-T = typing.TypeVar("T")
+Self = TypeVar("Self", bound="Context")
+
 class Context(AbstractContext):
     def __init__(self, db, loop: AbstractEventLoop, executor: Executor):
         self.executor = executor
         self.loop = loop
         self.db = db
     
-    def dispatch(self, dispatcher: Callable[..., T | None] | Dispatcher, *args, **kwargs) -> None | T | Future[T | None]:
+    async def dispatch(self, dispatcher: Callable | Dispatcher, *args, **kwargs) -> None:
+        """Sometimes we want to delegate it to another function to handle the file, we use dispatch for it"""
         if isinstance(dispatcher, Dispatcher):
             callable = dispatcher.dispatch
         else:
             callable = dispatcher
-        return self.loop.run_in_executor(self.executor, callable, self, *args, **kwargs)
-        # return callable(self, *args, **kwargs)
+        # return self.loop.run_in_executor(self.executor, callable, self, *args, **kwargs)
+        await callable(self, *args, **kwargs)
+    
+    async def dispatch_threads(self, dispatcher: Callable | Dispatcher, *args, **kwargs) -> None:
+        """Sometimes we want to delegate it to another function to handle the file, we use dispatch for it"""
+        if isinstance(dispatcher, Dispatcher):
+            callable = dispatcher.dispatch_thread
+        else:
+            callable = dispatcher
+        loop = asyncio.get_running_loop()
+        await loop.run_in_executor(self.executor, callable, self, *args, **kwargs)
+    
+    def clone_thread(self: Self, loop: AbstractEventLoop) -> Self:
+        """Clone the current thread's context into a new thread."""
+        return self.__class__(self.db, loop, self.executor)
+
+    def get_event_loop(self) -> AbstractEventLoop:
+        return self.loop
