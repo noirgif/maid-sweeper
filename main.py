@@ -8,24 +8,36 @@ import motor.motor_asyncio
 from common.context import Context
 from dispatchers.directory import Directory
 import nest_asyncio
+import tracemalloc
 
-logging.basicConfig(level=logging.DEBUG)
-if not sys.warnoptions:
-    import os, warnings
-    warnings.simplefilter("default") # Change the filter in this process
-    os.environ["PYTHONWARNINGS"] = "default" # Also affect subprocesses]
+# TODO: add a command line interface
+DEBUG = False
 
-nest_asyncio.apply()
+if DEBUG:
+    logging.basicConfig(level=logging.DEBUG)
+    if not sys.warnoptions:
+        import os
+        import warnings
+        warnings.simplefilter("default")  # Change the filter in this process
+        os.environ["PYTHONWARNINGS"] = "default"  # Also affect subprocesses]
 
 
 if __name__ == "__main__":
-    db = motor.motor_asyncio.AsyncIOMotorClient('mongodb://localhost:27017')['sweep_maid']
+    nest_asyncio.apply()
+    if DEBUG:
+        tracemalloc.start()
+    client : motor.MotorClient = motor.motor_asyncio.AsyncIOMotorClient(
+        'mongodb://localhost:27017') 
+    db : motor.MotorDatabase = client['sweep_maid']
     loop = asyncio.get_event_loop()
     context = Context(
-       db=db,
-       loop=loop,
-       executor=ThreadPoolExecutor(max_workers=12), 
+        db=db,
+        loop=loop,
+        executor=ThreadPoolExecutor(max_workers=12),
     )
 
     # classify a directory
     loop.run_until_complete(context.dispatch(Directory(), Path(sys.argv[1])))
+
+    if DEBUG:
+        tracemalloc.stop()
