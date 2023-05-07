@@ -34,13 +34,14 @@ Like Toki, she has two modes:
 
 ## Ideas
 
+- Multithreading
 - Remove type hints
 - Tags based on time
     * How does it affect other tags? If not why bother?
     * Maybe not tag, but just metadata
     * There will be IO cost
-- Group similarly named files
+- Group similarly named files: 01.jpg, 02.jpg, etc.
 - Understand human language so they can toss away garbage
 - Optionally clean up the database after sweeping.
 - Single line mode: do the tag, sweep, and clean up database entries with a single command.
-- User specify tagging
+- Allow users to specify tags
