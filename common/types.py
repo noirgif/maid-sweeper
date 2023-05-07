@@ -2,9 +2,7 @@
 
 from abc import abstractmethod
 import asyncio
-from typing import TypeVar
-
-Self = TypeVar("Self", bound="AbstractContext")
+from typing import Self
 
 class AbstractContext:
     @abstractmethod
@@ -20,7 +18,7 @@ class AbstractContext:
         pass
 
     @abstractmethod
-    def clone_thread(self: Self, loop: asyncio.AbstractEventLoop) -> Self:
+    def clone_thread(self, loop: asyncio.AbstractEventLoop) -> Self:
         pass
 
 

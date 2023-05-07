@@ -1,5 +1,4 @@
 from pathlib import Path
-import pymongo
 from common.context import Context
 from common.types import Dispatcher
 
