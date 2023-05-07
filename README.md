@@ -13,9 +13,11 @@ However, if allowed, this maid is also capable of Danshari (not yet). She will [
 
 ## How to use
 
+0. Install the requirements by running `pip install -r requirements.txt`, as well as MongoDB.
 1. Start a mongoDB instance
 2. Run `python maid.py tag D:\Study`, then you can find tagged entries in Database 'sweep_maid' Collection 'file_metadata'.
-3. Run `python maid.py sweep ["video","game"] rm -rf {}`, the maid is going to remove all 'video' or 'game' tagged files and directories.
+3. Run `python maid.py sweep '["video","game"]' rm -rf {}`, the maid is going to remove all 'video' or 'game' tagged files and directories.
+    * As `fire` is used, it is about the best we can get, without custom deserializer 
 
 ## TO-DO
 
@@ -23,9 +25,13 @@ However, if allowed, this maid is also capable of Danshari (not yet). She will [
 
 [ ] Tag based on time
     * How does it affect other tags? If not why bother?
+    * Maybe not tag, but just metadata
 
 [ ] Group similar named files
 
-[x] Automatically carry out actions based on the tags, like moving them Dan, Sha and Ri, etc.
+[x] Automatically carry out actions based on the tags, like Dan, Sha and Ri, etc.
 
 [ ] Understand human language so they can toss away garbage
+
+[ ] Better command line interface
+    * the way of specifying tag list looks unwieldy
