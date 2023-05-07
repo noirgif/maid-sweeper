@@ -25,7 +25,7 @@ class Directory(Dispatcher):
             task_file = asyncio.create_task(context.dispatch(File(self), path))
             tasks.append(task_file)
             if path.is_dir():
-                task_dir = asyncio.create_task(context.dispatch_threads(Directory(self), path))
+                task_dir = asyncio.create_task(context.dispatch(Directory(self), path))
                 tasks.append(task_dir)
         await asyncio.gather(*tasks)
 
