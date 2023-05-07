@@ -1,7 +1,7 @@
 from pathlib import Path
 import re
 from common.context import Context
-from common.patterns import EXTENSIONS, FILENAME_PATTERNS
+from common import patterns
 from common.types import Dispatcher
 from dispatchers.tag import Tag
 
@@ -14,13 +14,13 @@ class File(Dispatcher):
 
         # extension-based tagging
         tags : list[str] = []
-        for file_type in EXTENSIONS:
-            if extension in EXTENSIONS[file_type]:
+        for file_type in patterns.EXTENSIONS:
+            if extension in patterns.EXTENSIONS[file_type]:
                 tags.append(file_type)
         
         # special cases 
-        for file_tags, regex in FILENAME_PATTERNS:
-            if re.match(regex, path.name):
+        for file_tags, filename_pattern in patterns.FILENAMES_RE:
+            if filename_pattern.match(path.name):
                 if type(file_tags) is str:
                     tags.append(file_tags)
                 else:

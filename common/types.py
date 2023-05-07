@@ -21,6 +21,10 @@ class AbstractContext:
     def clone_thread(self, loop: asyncio.AbstractEventLoop) -> Self:
         pass
 
+    @abstractmethod
+    def is_debug(self) -> bool:
+        pass
+
 
 class Dispatcher:
     def __init__(self, parent=None):

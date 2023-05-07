@@ -6,10 +6,11 @@ from typing import Callable, Self
 from common.types import AbstractContext, Dispatcher
 
 class Context(AbstractContext):
-    def __init__(self, db, loop: AbstractEventLoop, executor: Executor):
+    def __init__(self, db, loop: AbstractEventLoop, executor: Executor, debug=False):
         self.executor = executor
         self.loop = loop
         self.db = db
+        self._debug = debug
     
     async def dispatch(self, dispatcher: Callable | Dispatcher, *args, **kwargs) -> None:
         """Sometimes we want to delegate it to another function to handle the file, we use dispatch for it"""
@@ -31,7 +32,10 @@ class Context(AbstractContext):
     
     def clone_thread(self, loop: asyncio.AbstractEventLoop) -> Self:
         """Clone the current thread's context into a new thread."""
-        return Context(self.db, loop, self.executor)
+        return Context(self.db, loop, self.executor, self._debug)
 
     def get_event_loop(self) -> AbstractEventLoop:
         return self.loop
+    
+    def is_debug(self) -> bool:
+        return self._debug

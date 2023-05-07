@@ -3,16 +3,15 @@ from pathlib import Path
 import re
 from common.context import Context
 from common.types import Dispatcher
-from common.patterns import TYPICAL_FILES
+from common.patterns import TYPICAL_FILES_RE
 from dispatchers.file import File
 from dispatchers.tag import Tag
 
 class Directory(Dispatcher):
     async def dispatch(self, context: Context, directory: Path):
         for path in directory.iterdir():
-            for directory_type in TYPICAL_FILES:
-                for regex in TYPICAL_FILES[directory_type]:
-                    if re.match(regex, path.name, re.IGNORECASE):
+            for directory_type in TYPICAL_FILES_RE:
+                    if TYPICAL_FILES_RE[directory_type].match(path.name):
                         await context.dispatch(Tag(self), directory, [directory_type])
                         # do not continue if the whole directory is tagged
                         return
