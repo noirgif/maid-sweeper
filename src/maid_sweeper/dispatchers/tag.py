@@ -1,6 +1,6 @@
 from pathlib import Path
-from common.context import Context
-from common.types import Dispatcher
+from maid_sweeper.common.context import Context
+from maid_sweeper.common.interface import Dispatcher
 
 class Tag(Dispatcher):
     async def dispatch(self, context: Context, path: Path, tags: list[str]):

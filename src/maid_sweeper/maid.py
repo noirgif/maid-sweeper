@@ -6,14 +6,13 @@ from pathlib import Path
 import sys
 import tracemalloc
 from typing import Awaitable, Callable, ParamSpec, TypeVar
-import fire
 import motor.motor_asyncio
 import nest_asyncio
 from pymongo import ASCENDING
-from common import patterns
-from common.context import Context
-from dispatchers.directory import Directory
-from dispatchers.exec import Exec
+from maid_sweeper.common import patterns
+from maid_sweeper.common.context import Context
+from maid_sweeper.dispatchers.directory import Directory
+from maid_sweeper.dispatchers.exec import Exec
 
 P = ParamSpec("P")
 R = TypeVar('R')
@@ -101,7 +100,7 @@ class MaidSweeper:
         self.context.loop.run_until_complete(coro)
 
 
-if __name__ == "__main__":
+def main():
     parser = argparse.ArgumentParser(description='Sweep maid')
 
     parser.add_argument('--mongodb-url', type=str, default='mongodb://localhost:27017',
@@ -138,3 +137,7 @@ if __name__ == "__main__":
         maid.sweep(tuple(args.keywords.split(',')), *args.exec_args)
     elif args.command == 'tag':
         maid.tag(args.path)
+
+
+if __name__ == '__main__':
+    main()

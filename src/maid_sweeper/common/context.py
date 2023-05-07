@@ -3,7 +3,7 @@ import asyncio
 from concurrent.futures import Executor
 from typing import Callable, Self
 
-from common.types import AbstractContext, Dispatcher
+from maid_sweeper.common.interface import AbstractContext, Dispatcher
 
 class Context(AbstractContext):
     def __init__(self, db, loop: AbstractEventLoop, executor: Executor, debug=False):

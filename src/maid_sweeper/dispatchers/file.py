@@ -1,9 +1,8 @@
 from pathlib import Path
-import re
-from common.context import Context
-from common import patterns
-from common.types import Dispatcher
-from dispatchers.tag import Tag
+from maid_sweeper.common.context import Context
+from maid_sweeper.common import patterns
+from maid_sweeper.common.interface import Dispatcher
+from maid_sweeper.dispatchers.tag import Tag
 
 
 

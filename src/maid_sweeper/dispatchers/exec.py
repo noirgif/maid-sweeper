@@ -3,8 +3,8 @@ from pathlib import Path
 import re
 import shlex
 import sys
-from common.context import Context
-from common.types import Dispatcher
+from maid_sweeper.common.context import Context
+from maid_sweeper.common.interface import Dispatcher
 
 def windows_quote(s):
     if not s:

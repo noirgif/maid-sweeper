@@ -1,11 +1,10 @@
 import asyncio
 from pathlib import Path
-import re
-from common.context import Context
-from common.types import Dispatcher
-from common.patterns import TYPICAL_FILES_RE
-from dispatchers.file import File
-from dispatchers.tag import Tag
+from maid_sweeper.common.context import Context
+from maid_sweeper.common.interface import Dispatcher
+from maid_sweeper.common.patterns import TYPICAL_FILES_RE
+from maid_sweeper.dispatchers.file import File
+from maid_sweeper.dispatchers.tag import Tag
 
 class Directory(Dispatcher):
     async def dispatch(self, context: Context, directory: Path):
