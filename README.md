@@ -4,39 +4,43 @@ Instead of cleaning the unused files, it calls a maid to label them and sweep th
 
 However, the maid can practice Danshari given permission. For example, she can [sell your unused iPad for money](https://comic-days.com/episode/3269754496647364302).
 
+Like Toki, she has two modes:
+
+`tag`: Label the files/directories automatically, based on their types and names.
+
+- code projects and application directories are labeled, and their children are not scanned
+- others are labeled based on the extensions
+
+`sweep`: Carry out actions based on the labels`.
+
 ## Feature
 
-* Asyncio
-* MongoDB
-* Not scanning every single file inside code and program directories, saving time
-    * Avoid accessing metadata
+* AsyncIO, so all operations are in parallel
+* MongoDB for fast indexing
+* Save time by not scanning every single file inside code and program directories and not checking the metadata
 * Kyoufu
 
 ## Installation
 
 1. Have Python 3.11 (as it used some fancy type hints that is incompatible with <3.11).
-2. Install the requirements by running `pip install .`.
+2. Install the requirements by running `pip install maid-sweeper`.
 
 ## Usage
 
 1. Start a MongoDB instance.
-2. Run `python maid.py tag D:\Study`, then you can find tagged entries in Database 'sweep_maid' Collection 'file_metadata'. Then it can be used for further processing.
-3. Run `python maid.py sweep video,game rm -rf {}`, the maid is going to remove all 'video' or 'game' tagged files and directories.
-    * As `fire` is used, it is about the best we can get, without custom deserializer 
+2. Run `maid-sweeper tag D:\Study`, then you can find tagged entries in the database. Sweeping works on all directories tagged.
+3. Run `maid-sweeper sweep video,game rm -rf {}`, and the maid is going to remove all 'video' or 'game' tagged files and directories.
+    * Any other commands is OK as well
 
-## TO-DO
+## Ideas
 
-- [ ] Remove type hints
-- [ ] Better readme
-- [ ] Tag based on time
+- Remove type hints
+- Tags based on time
     * How does it affect other tags? If not why bother?
     * Maybe not tag, but just metadata
     * There will be IO cost
-- [ ] Group similar named files
-- [x] Automatically carry out actions based on the tags, like Dan, Sha and Ri, etc.
-- [ ] Understand human language so they can toss away garbage
-
-- [x] Better command line interface
-    * have to escape {} for fire
-- [ ] Optionally clean up the database after sweeping.
-- [ ] Single line mode: do the tag, sweep, and clean up database entries with a single command.
+- Group similarly named files
+- Understand human language so they can toss away garbage
+- Optionally clean up the database after sweeping.
+- Single line mode: do the tag, sweep, and clean up database entries with a single command.
+- User specify tagging
