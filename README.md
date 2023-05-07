@@ -35,3 +35,6 @@ However, if allowed, this maid is also capable of Danshari (not yet). She will [
 
 [ ] Better command line interface
     * the way of specifying tag list looks unwieldy
+
+[ ] Performance
+    * Seems to be bad inside a large directory

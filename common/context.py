@@ -1,7 +1,7 @@
 from asyncio import AbstractEventLoop
 import asyncio
 from concurrent.futures import Executor
-from typing import Callable, Self, TypeVar
+from typing import Callable, Self
 
 from common.types import AbstractContext, Dispatcher
 
