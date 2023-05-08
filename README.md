@@ -22,15 +22,16 @@ Like Toki, she has two modes:
 
 ## Installation
 
-1. Have Python 3.11 (as it used some fancy type hints that is incompatible with <3.11).
-2. Install the requirements by running `pip install maid-sweeper`.
+1. Have Python 3.10.
+2. Install by running `pip install maid-sweeper`.
 
 ## Usage
 
 1. Start a MongoDB instance.
 2. Run `maid-sweeper tag D:\Study`, then you can find tagged entries in the database. Sweeping works on all directories tagged.
-3. Run `maid-sweeper sweep video,game rm -rf {}`, and the maid is going to remove all 'video' or 'game' tagged files and directories.
+3. Run `maid-sweeper sweep -t video game -x del \q \f {}`, and the maid is going to remove all 'video' or 'game' tagged files and directories.
     * Any other commands is OK as well
+    * By default the maid will do a sweep -- remove all those files. Kyoufu!
 
 ## Ideas
 

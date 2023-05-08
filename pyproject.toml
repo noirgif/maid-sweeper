@@ -4,13 +4,13 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "maid-sweeper"
-version = "0.6.9"
+version = "0.6.96"
 authors = [
   { name="noirgif", email="nomaru@outlook.com" },
 ]
 description = "A maid that sweeps your files"
 readme = "README.md"
-requires-python = ">=3.11"
+requires-python = ">=3.10"
 classifiers = [
     "Programming Language :: Python :: 3",
     "License :: OSI Approved :: MIT License",
@@ -18,7 +18,8 @@ classifiers = [
 ]
 dependencies = [
     'nest-asyncio',
-    'pymongo',
+    'motor',
+    'certifi'
 ]
 
 [project.scripts]
