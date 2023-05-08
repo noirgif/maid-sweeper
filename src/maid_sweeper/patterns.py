@@ -1,7 +1,7 @@
 # Files that determines the type of its parent directory
 import re
 
-TYPICAL_FILES_LIST : dict[str, list[str]]= {
+TYPICAL_FILES_LIST: dict[str, list[str]] = {
     "code-project": [
         r'^\.git$',
         r'^\.hg$',
@@ -87,7 +87,7 @@ TYPICAL_FILES_LIST : dict[str, list[str]]= {
     ],
 }
 
-TYPICAL_FILES_RE : dict[str, re.Pattern]= {}
+TYPICAL_FILES_RE: dict[str, re.Pattern] = {}
 for k, v in TYPICAL_FILES_LIST.items():
     TYPICAL_FILES_RE[k] = re.compile('|'.join(v), re.IGNORECASE)
 
@@ -129,9 +129,10 @@ EXTENSIONS = {
     "book": set(['epub', 'mobi', 'azw', 'azw3', 'djvu']),
 }
 
+# special file names
 FILENAMES: list[tuple[list[str], str]] = [
     # ArXiv paper
-    (["arxiv"], r'^\d{4}\.\d{4,5}\.pdf$'),
+    (["paper"], r'^\d{4}\.\d{4,5}\.pdf$'),
 
     # Game Software
     (["game", "dmm"], r'^[a-z]{4,5}_\d{4,5}\.exe$'),

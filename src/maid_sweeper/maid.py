@@ -73,7 +73,8 @@ class MaidSweeper:
         for path in paths:
             if self.context.is_debug():
                 print(f"Tagging {path}")
-            tasks.append(dispatcher.Directory().dispatch_thread(self.context, Path(path)))
+            tasks.append(dispatcher.Directory().dispatch_thread(
+                self.context, Path(path)))
         await asyncio.gather(*tasks)
         await self.context.db.file_metadata.create_index([("tags", ASCENDING)])
 

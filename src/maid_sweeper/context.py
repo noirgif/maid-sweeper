@@ -4,8 +4,6 @@ from concurrent.futures import ThreadPoolExecutor
 import motor.motor_asyncio
 
 
-
-
 class AbstractContext:
     @abstractmethod
     def __init__(self):
@@ -48,9 +46,11 @@ class ThreadMotorContext(ThreadAsyncIOContext):
         if self.dbopt['host'].startswith('mongodb+srv://') or ('ssl' in self.dbopt and self.dbopt['ssl']):
             import certifi
             ca = certifi.where()
-            self.client = motor.motor_asyncio.AsyncIOMotorClient(**dbopt, tlsCAFile=ca)
+            self.client = motor.motor_asyncio.AsyncIOMotorClient(
+                **dbopt, tlsCAFile=ca)
         else:
-            self.client = motor.motor_asyncio.AsyncIOMotorClient(host=self.dbopt['host'], port=self.dbopt['port'])
+            self.client = motor.motor_asyncio.AsyncIOMotorClient(
+                host=self.dbopt['host'], port=self.dbopt['port'])
         self.database_name = database_name
         self.db: motor.motor_asyncio.AsyncIOMotorDatabase = self.client[
             database_name]
